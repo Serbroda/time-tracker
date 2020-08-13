@@ -1,0 +1,9 @@
+.prettierrc
+*.json
+*.md
+*.markdown
+./android
+./ios
+/**/materialize*.css
+/**/materialize*.js
+/**/jquery*.js

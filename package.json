@@ -1,0 +1,36 @@
+{
+  "name": "time-tracker-app",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build:sass": "node-sass src/sass/styles.scss dist/styles.min.css --output-style compressed",
+    "build:ts": "tsc",
+    "build:copy": "copyfiles -f ./src/index.html ./src/css/*.css ./src/img/** ./src/js/*.js ./dist",
+    "build": "npm run clean && npm run build:sass && npm run build:ts && npm run build:copy",
+    "watch:ts": "tsc --watch",
+    "watch:sass": "node-sass -w src/sass/styles.scss dist/styles.min.css --output-style compressed",
+    "watch:html": "onchange \"src/index.html\" -- npm run build:copy",
+    "watch": "npm run build && concurrently \"npm run watch:ts\" \"npm run watch:sass\" \"npm run watch:html\"",
+    "start": "npm run build && cross-env NODE_ENV=development electron dist/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+    "concurrently": "^5.3.0",
+    "copyfiles": "^2.3.0",
+    "cross-env": "^7.0.2",
+    "electron": "^9.2.0",
+    "electron-builder": "^22.8.0",
+    "node-sass": "^4.14.1",
+    "onchange": "^7.0.2",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "menubar": "^9.0.1"
+  }
+}
