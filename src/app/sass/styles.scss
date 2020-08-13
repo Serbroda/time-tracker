@@ -1,0 +1,30 @@
+@import 'materialize';
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-grey {
+    color: gray;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.m-0 {
+    margin: 0;
+}
+.mt-0 {
+    margin-top: 0;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
