@@ -4,8 +4,8 @@ const { menubar } = require('menubar');
 
 const mb = menubar({
     cwd: __dirname,
-    index: `file://${path.join('index.html')}`,
-    icon: path.join('index.html'),
+    index: `file://${path.join(__dirname, 'index.html')}`,
+    icon: path.join(path.join(__dirname, 'time.png')),
 });
 
 mb.on('ready', () => {
