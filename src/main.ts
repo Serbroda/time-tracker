@@ -1,8 +1,10 @@
 import * as path from 'path';
-import { ipcMain, BrowserWindow } from 'electron';
+import { ipcMain } from 'electron';
+import { TimeTracker } from './app/timetracker';
 
 // @ts-ignore
 const { menubar } = require('menubar');
+const tt = new TimeTracker();
 
 const mb = menubar({
     cwd: __dirname,
@@ -19,14 +21,6 @@ mb.on('ready', () => {
     console.log('Menubar app is ready.', mb);
 });
 
-mb.on('show', () => {
-    console.log('Show');
-    const win = mb.window as BrowserWindow;
-    if (win && win.webContents) {
-        win.webContents.openDevTools();
-    }
-});
-
 ipcMain.on('start', (event: any) => {
-    console.log('Main: start');
+    tt.start();
 });

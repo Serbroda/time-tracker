@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/jquery": "^3.5.1",
+    "@types/nedb": "^1.8.10",
     "@types/node": "^14.0.27",
     "concurrently": "^5.3.0",
     "copyfiles": "^2.3.0",
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "menubar": "^9.0.1",
+    "moment": "^2.27.0",
     "nedb": "^1.8.0"
   }
 }
