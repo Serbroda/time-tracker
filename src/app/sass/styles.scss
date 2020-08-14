@@ -1,9 +1,35 @@
 @import 'materialize';
 
+html,
+body,
+body .window,
+body .window-content {
+    height: 100%;
+    min-height: 100%;
+}
 body {
     margin: 0;
     padding: 0;
-    background-color: #fff;
+    background-color: transparent;
+    padding: 8px;
+}
+
+.window {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+
+.nav-extended {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.h-100-fix {
+    height: calc(100% - 15px);
+}
+
+.h-minus-navbar {
+    height: calc(100% - 58px);
 }
 
 .text-uppercase {

@@ -13,7 +13,6 @@ export class TimeTracker {
     private readonly timeFormat = 'HH:mm:ss';
     private readonly dateTimeFormat = `${this.dateFormat} ${this.timeFormat}`;
     private csv: Csv<TimeItem> | undefined;
-    private items: TimeItem[] = [];
 
     constructor(private store: any) {
         const db = this.store.get('database');
@@ -34,7 +33,6 @@ export class TimeTracker {
     }
 
     public async start(name: string = 'Work'): Promise<TimeItem> {
-        await this.csv!.read();
         const now = moment();
         const item: TimeItem = {
             _id: genId(),

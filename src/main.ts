@@ -12,6 +12,7 @@ const mb = menubar({
     index: `file://${path.join(__dirname, 'index.html')}`,
     icon: path.join(path.join(__dirname, 'time.png')),
     browserWindow: {
+        transparent: true,
         webPreferences: {
             nodeIntegration: true,
         },

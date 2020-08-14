@@ -1,6 +1,5 @@
 import * as fs from 'fs';
-import { AtLeast } from './models/AtLeast';
-const csv = require('csv-parser');
+const csvReader = require('csv-parser');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 export type CsvHeaders<T> = {
@@ -41,7 +40,7 @@ export class Csv<T> {
         return new Promise<T[]>((resolve, reject) => {
             let items: T[] = [];
             fs.createReadStream(this.file)
-                .pipe(csv({ delimiter: this.opt.delimiter }))
+                .pipe(csvReader({ delimiter: this.opt.delimiter }))
                 .on('data', (row: any) => {
                     const headers = this.mapHeaders();
                     let item: any = {};

@@ -8,32 +8,51 @@
     <body>
         <div class="window">
             <div class="window-content">
-                <div class="row">
-                    <div class="col s12">
-                        <ul class="tabs">
-                            <li class="tab col s6"><a class="active" href="#tab-content-track">Track</a></li>
-                            <li class="tab col s6"><a href="#tab-content-times">Times</a></li>
+                <nav class="nav-extended blue">
+                    <div class="nav-content">
+                        <ul class="tabs tabs-transparent">
+                            <li class="tab"><a class="active" href="#tab-content-track">Track</a></li>
+                            <li class="tab"><a href="#tab-content-times">Times</a></li>
+                            <li class="tab"><a href="#tab-content-settings">Settings</a></li>
                         </ul>
                     </div>
-                    <div id="tab-content-track" class="col s12">
-                        <div class="row">
-                            <div class="col s12">
-                                <p class="mb-0 center-align text-uppercase text-grey">Today</p>
-                                <h1 class="m-0 center-align">00:00</h1>
-                                <p class="mb-0 center-align text-uppercase text-grey">Break</p>
-                                <h3 class="m-0 center-align">00:00</h3>
+                </nav>
+
+                <!--<div class="card center-align" style="margin-top: 10px; padding: 20px; width: 80%; left: 10%;">-->
+
+                <div class="container h-minus-navbar">
+                    <div class="card h-100-fix" style="padding: 10px;">
+                        <div id="tab-content-track" class="col s12">
+                            <div class="row">
+                                <div class="col s12">
+                                    <p class="mb-0 center-align text-uppercase text-grey">Today</p>
+                                    <h1 class="m-0 center-align">00:00</h1>
+                                    <p class="mb-0 center-align text-uppercase text-grey">Break</p>
+                                    <h3 class="m-0 center-align">00:00</h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col s12">
-                                <div class="center-align">
-                                    <a id="btnStart" class="waves-effect waves-light btn btn-large">Start</a>
-                                    <a id="btnBreak" class="waves-effect waves-light btn btn-large">Break</a>
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="center-align">
+                                        <a id="btnStart" class="waves-effect waves-light btn btn-large">Start</a>
+                                        <a id="btnBreak" class="waves-effect waves-light btn btn-large">Break</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div id="tab-content-times" class="col s12">
+                            <div class="row">
+                                <div class="col s12 center-align">
+                                    <div class="input-field inline" style="width: 70%;">
+                                        <input id="email_inline" type="text" />
+                                        <label for="email_inline">Whats's up?</label>
+                                    </div>
+                                    <a class="waves-effect waves-light btn">Start</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-content-settings" class="col s12">Settings</div>
                     </div>
-                    <div id="tab-content-times" class="col s12">Times</div>
                 </div>
             </div>
         </div>
@@ -52,6 +71,10 @@
             if (window.module) module = window.module;
         </script>
         <script type="text/javascript">
+            $(document).ready(function () {
+                $('.tabs').tabs();
+            });
+
             const ipcRenderer = require('electron').ipcRenderer;
 
             $('#btnStart').click(() => {
