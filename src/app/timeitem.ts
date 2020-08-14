@@ -5,4 +5,5 @@ export interface TimeItem {
     start: string;
     end?: string;
     created: string;
+    isBillable: boolean;
 }

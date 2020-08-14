@@ -69,18 +69,21 @@ export class Csv<T> {
 
     public async update(predicate: (this: void, value: T, index: number, obj: T[]) => boolean, item: Partial<T>) {
         const all = await this.read();
-        const index = all.findIndex(predicate);
-        const current = all[index];
-        all[index] = { ...current, ...item };
+        const found = all.filter(predicate);
+        for (let item of found) {
+            const index = all.indexOf(item);
+            const current = all[index];
+            all[index] = { ...current, ...item };
+        }
         return this.write(all, false);
     }
 
-    public async filter(predicate: (this: void, value: T, index: number, obj: T[]) => value is T): Promise<T[]> {
+    public async find(predicate: (this: void, value: T, index: number, obj: T[]) => value is T): Promise<T[]> {
         const records = await this.read();
         return records.filter(predicate);
     }
 
-    public async find(
+    public async findOne(
         predicate: (this: void, value: T, index: number, obj: T[]) => value is T
     ): Promise<T | undefined> {
         const records = await this.read();

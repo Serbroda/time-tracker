@@ -31,12 +31,20 @@ mb.on('ready', () => {
         });
         tt = new TimeTracker(store);
 
-        ipcMain.on('start', (event: any) => {
-            tt.start();
+        ipcMain.on('start', async (event: any) => {
+            event.returnValue = await tt.start('work');
         });
 
-        ipcMain.on('stop', (event: any) => {
-            tt.stop('');
+        ipcMain.on('stop', (event: any, itemId: string) => {
+            tt.stop(itemId);
+        });
+
+        ipcMain.on('start-break', async (event: any) => {
+            event.returnValue = await tt.start('break');
+        });
+
+        ipcMain.on('stop-break', async (event: any, itemId: string) => {
+            tt.stop(itemId);
         });
     }
 });

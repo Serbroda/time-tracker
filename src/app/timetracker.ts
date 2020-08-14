@@ -29,10 +29,11 @@ export class TimeTracker {
             start: 'Start',
             end: 'End',
             created: 'Created',
+            isBillable: 'Billable',
         });
     }
 
-    public async start(name: string = 'Work'): Promise<TimeItem> {
+    public async start(name: 'work' | 'break'): Promise<TimeItem> {
         const now = moment();
         const item: TimeItem = {
             _id: genId(),
@@ -40,6 +41,7 @@ export class TimeTracker {
             date: now.format(this.dateFormat),
             start: now.format(this.timeFormat),
             created: now.format(this.dateTimeFormat),
+            isBillable: true,
         };
         await this.csv!.write([item]);
         return item;
@@ -50,37 +52,9 @@ export class TimeTracker {
         this.csv!.update((i) => i._id === id, { end: moment().format(this.timeFormat) });
     }
 
-    /*public async startBreak() {
-        return this.add('start-break');
+    public async find(
+        predicate: (this: void, value: TimeItem, index: number, obj: TimeItem[]) => value is TimeItem
+    ): Promise<TimeItem[]> {
+        return this.csv!.find(predicate);
     }
-    public async stopBreak() {
-        return this.add('stop-break');
-    }
-
-    public async find(date?: Date) {
-        const d = date ? date : new Date();
-        const mom = moment(d);
-    }*/
-
-    /*public async add(type: TimeItemType, date?: Date): Promise<TimeItem> {
-        return new Promise<TimeItem>(async (resolve, reject) => {
-            const mom = moment(date ? date : new Date());
-            this.timesDb.insert<TimeItem>(
-                {
-                    name: 'default',
-                    created: mom.toDate(),
-                    date: mom.format('YYYY-MM-DD'),
-                    time: mom.format('HH:mm'),
-                    type: type,
-                },
-                (err: Error | null, doc: TimeItem) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(doc);
-                    }
-                }
-            );
-        });
-    }*/
 }
