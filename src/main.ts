@@ -1,10 +1,11 @@
 import * as path from 'path';
-import { ipcMain } from 'electron';
+import { ipcMain, App } from 'electron';
 import { TimeTracker } from './app/timetracker';
+import ElectronStore from 'electron-store';
 
 // @ts-ignore
+let tt: TimeTracker;
 const { menubar } = require('menubar');
-const tt = new TimeTracker();
 
 const mb = menubar({
     cwd: __dirname,
@@ -18,14 +19,23 @@ const mb = menubar({
 });
 
 mb.on('ready', () => {
-    console.log('Menubar app is ready.', mb);
-});
+    const app = mb.app as App;
+    if (app) {
+        const store = new ElectronStore({
+            defaults: {
+                app: {
+                    database: path.join(app.getPath('userData'), 'database.csv'),
+                },
+            },
+        });
+        tt = new TimeTracker(store);
 
-ipcMain.on('start', (event: any) => {
-    tt.start();
-});
+        ipcMain.on('start', (event: any) => {
+            tt.start();
+        });
 
-ipcMain.on('stop', (event: any) => {
-    console.log('IPC MAIN stop');
-    tt.stop('');
+        ipcMain.on('stop', (event: any) => {
+            tt.stop('');
+        });
+    }
 });

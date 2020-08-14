@@ -12,11 +12,18 @@ export class TimeTracker {
     private readonly dateFormat = 'YYYY-MM-DD';
     private readonly timeFormat = 'HH:mm:ss';
     private readonly dateTimeFormat = `${this.dateFormat} ${this.timeFormat}`;
-    private readonly csv: Csv<TimeItem>;
+    private csv: Csv<TimeItem> | undefined;
     private items: TimeItem[] = [];
 
-    constructor() {
-        this.csv = new Csv<TimeItem>(path.join(process.cwd(), 'times.csv'), {
+    constructor(private store: any) {
+        const db = this.store.get('database');
+        const file = db ? db : path.join(process.cwd(), 'times.csv');
+        this.initCsv(file);
+        this.store.onDidChange('app.database', (newValue: any, oldValue: any) => this.initCsv(newValue));
+    }
+
+    private initCsv(file: string) {
+        this.csv = new Csv<TimeItem>(file, {
             _id: 'Id',
             name: 'Name',
             date: 'Date',
@@ -25,23 +32,24 @@ export class TimeTracker {
             created: 'Created',
         });
     }
-    public async start(): Promise<TimeItem> {
-        await this.csv.read();
+
+    public async start(name: string = 'Work'): Promise<TimeItem> {
+        await this.csv!.read();
         const now = moment();
         const item: TimeItem = {
             _id: genId(),
-            name: 'work',
+            name: name,
             date: now.format(this.dateFormat),
             start: now.format(this.timeFormat),
             created: now.format(this.dateTimeFormat),
         };
-        await this.csv.write([item]);
+        await this.csv!.write([item]);
         return item;
     }
 
     public async stop(item: string | AtLeast<TimeItem, '_id'>) {
         const id = typeof item === 'string' ? item : item._id!;
-        this.csv.update((i) => i._id === id, { end: moment().format(this.timeFormat) });
+        this.csv!.update((i) => i._id === id, { end: moment().format(this.timeFormat) });
     }
 
     /*public async startBreak() {

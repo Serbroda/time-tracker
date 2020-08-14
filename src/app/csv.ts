@@ -19,6 +19,8 @@ export interface CsvOptions {
 
 export class Csv<T> {
     private readonly opt: CsvOptions;
+    private doNotAppendForFirstWrite: boolean = false;
+
     constructor(private file: string, private headers: CsvHeaders<T>, options?: Partial<CsvOptions>) {
         this.opt = {
             ...{
@@ -29,6 +31,9 @@ export class Csv<T> {
         };
         if (!fs.existsSync(file)) {
             fs.closeSync(fs.openSync(file, 'w'));
+            this.doNotAppendForFirstWrite = true;
+        } else {
+            setTimeout(async () => (this.doNotAppendForFirstWrite = (await this.count()) < 1), 10);
         }
     }
 
@@ -55,6 +60,10 @@ export class Csv<T> {
     }
 
     public async write(data: T | T[], append: boolean = true) {
+        if (this.doNotAppendForFirstWrite) {
+            append = false;
+            this.doNotAppendForFirstWrite = false;
+        }
         const records: T[] = Array.isArray(data) ? data : [data];
         return this.createWriter(append).writeRecords(records);
     }
@@ -98,5 +107,9 @@ export class Csv<T> {
             alwaysQuote: this.opt.quote,
             append,
         });
+    }
+
+    public async count(): Promise<number> {
+        return (await this.read()).length;
     }
 }
