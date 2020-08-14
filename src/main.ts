@@ -24,3 +24,8 @@ mb.on('ready', () => {
 ipcMain.on('start', (event: any) => {
     tt.start();
 });
+
+ipcMain.on('stop', (event: any) => {
+    console.log('IPC MAIN stop');
+    tt.stop('');
+});

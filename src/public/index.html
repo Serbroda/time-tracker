@@ -28,7 +28,7 @@
                             <div class="col s12">
                                 <div class="center-align">
                                     <a id="btnStart" class="waves-effect waves-light btn btn-large">Start</a>
-                                    <a class="waves-effect waves-light btn btn-large">Break</a>
+                                    <a id="btnBreak" class="waves-effect waves-light btn btn-large">Break</a>
                                 </div>
                             </div>
                         </div>
@@ -56,6 +56,9 @@
 
             $('#btnStart').click(() => {
                 ipcRenderer.send('start');
+            });
+            $('#btnBreak').click(() => {
+                ipcRenderer.send('stop');
             });
         </script>
     </body>

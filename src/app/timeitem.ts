@@ -3,7 +3,7 @@ export interface TimeItem {
     _id?: string;
     name: string;
     date: string;
-    time: string;
-    created: Date;
-    type: TimeItemType;
+    start: string;
+    end?: string;
+    created: string;
 }
