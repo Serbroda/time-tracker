@@ -1,6 +1,6 @@
 import * as path from 'path';
 import moment = require('moment');
-import { TimeItem, TimeItemType } from './timeitem';
+import { TimeItem } from './timeitem';
 import { Csv } from './csv';
 import { AtLeast } from './models/AtLeast';
 
@@ -40,11 +40,8 @@ export class TimeTracker {
     }
 
     public async stop(item: string | AtLeast<TimeItem, '_id'>) {
-        //const id = typeof item === 'string' ? item : item._id!;
-        const items = await this.csv.read();
-        console.log('Items', items);
-        const first = items[0] as TimeItem;
-        this.csv.update((i) => i._id === first._id, { end: moment().format(this.timeFormat) });
+        const id = typeof item === 'string' ? item : item._id!;
+        this.csv.update((i) => i._id === id, { end: moment().format(this.timeFormat) });
     }
 
     /*public async startBreak() {

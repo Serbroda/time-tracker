@@ -7,7 +7,7 @@ export type CsvHeaders<T> = {
     [key in keyof T]: string;
 };
 
-interface CsvHeader {
+export interface CsvHeader {
     id: string;
     title: string;
 }
@@ -62,7 +62,6 @@ export class Csv<T> {
     public async update(predicate: (this: void, value: T, index: number, obj: T[]) => boolean, item: Partial<T>) {
         const all = await this.read();
         const index = all.findIndex(predicate);
-        console.log('Found index', index);
         const current = all[index];
         all[index] = { ...current, ...item };
         return this.write(all, false);
