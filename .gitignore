@@ -230,3 +230,4 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/git,node,visualstudiocode,intellij+all
 
 *.db
+*.csv

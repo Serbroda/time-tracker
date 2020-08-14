@@ -1,17 +1,14 @@
-import NeDB = require('nedb');
 import * as path from 'path';
 import moment = require('moment');
 import { TimeItem, TimeItemType } from './timeitem';
 import { Csv } from './csv';
 import { AtLeast } from './models/AtLeast';
-import { runInThisContext } from 'vm';
 
 export const genId = (): string => {
     return (Date.now() + Math.round(Math.random() * 36 ** 12)).toString(36);
 };
 
 export class TimeTracker {
-    private readonly timesDb: NeDB;
     private readonly dateFormat = 'YYYY-MM-DD';
     private readonly timeFormat = 'HH:mm:ss';
     private readonly dateTimeFormat = `${this.dateFormat} ${this.timeFormat}`;
@@ -19,7 +16,6 @@ export class TimeTracker {
     private items: TimeItem[] = [];
 
     constructor() {
-        this.timesDb = new NeDB({ filename: path.join(process.cwd(), 'times.db'), autoload: true });
         this.csv = new Csv<TimeItem>(path.join(process.cwd(), 'times.csv'), {
             _id: 'Id',
             name: 'Name',
